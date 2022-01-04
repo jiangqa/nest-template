@@ -6,13 +6,16 @@ import { Connection } from 'typeorm'
 import { UserModule } from './user/user.module'
 import { ConfigModule } from '@nestjs/config'
 import { databaseConfig } from '../config/index.config'
+import { AuthModule } from './auth/auth.module'
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true
     }),
     TypeOrmModule.forRoot(databaseConfig()),
-    UserModule
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService]

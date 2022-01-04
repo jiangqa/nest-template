@@ -4,7 +4,6 @@ import { UpdateUserDto } from './dto/update-user.dto'
 import { Repository } from 'typeorm'
 import { User } from './entities/user.entity'
 import { InjectRepository } from '@nestjs/typeorm'
-
 @Injectable()
 export class UserService {
   constructor(
@@ -16,12 +15,24 @@ export class UserService {
     return this.userRepository.findOne({ username: createUserDto.username })
   }
 
-  findAll() {
-    return this.userRepository.find()
+  async findAll() {
+    return await this.userRepository.find({
+      select: [
+        'id',
+        'username',
+        'phone',
+        'isActive',
+        'createTime',
+        'updateTime'
+      ]
+    })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`
+  async findOne(id: number) {
+    return this.userRepository.findOne(id)
+  }
+  async findOneByName(username: string) {
+    return this.userRepository.findOne({ username })
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

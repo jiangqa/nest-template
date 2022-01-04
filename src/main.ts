@@ -9,7 +9,6 @@ async function bootstrap() {
     .setTitle('接口文档')
     .setDescription('接口文档')
     .setVersion('1.0')
-    .addBearerAuth()
     .build()
   const document = SwaggerModule.createDocument(app, options)
   SwaggerModule.setup('api', app, document)
