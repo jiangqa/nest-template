@@ -6,15 +6,25 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards
+  UseGuards,
+  Request
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
-import { ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger'
+import {
+  ApiOperation,
+  ApiTags,
+  ApiResponse,
+  ApiBearerAuth
+} from '@nestjs/swagger'
 import { User } from './entities/user.entity'
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard'
+import { RoleEnum } from '../../enum/role.enum'
+import { Roles } from '../../decorator/roles.decorator'
+import { RolesGuard } from '../../guard/roles.guard'
 
+@ApiBearerAuth()
 @Controller('user')
 @ApiTags('用户')
 export class UserController {
@@ -28,13 +38,13 @@ export class UserController {
     return this.userService.create(createUserDto)
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get()
-  @ApiOperation({
-    summary: '查询所有用户'
-  })
+  @ApiOperation({ summary: '查询所有用户' })
   @ApiResponse({ type: [User] })
-  findAll() {
+  @Roles(RoleEnum.Admin)
+  findAll(@Request() req) {
+    console.log(req)
     return this.userService.findAll()
   }
 

@@ -6,6 +6,7 @@ import {
   UpdateDateColumn
 } from 'typeorm'
 import { ApiProperty } from '@nestjs/swagger'
+import { RoleEnum } from '../../../enum/role.enum'
 
 @Entity()
 export class User {
@@ -51,8 +52,17 @@ export class User {
     default: true
   })
   @ApiProperty({
-    description: '是否活跃',
-    type: Boolean
+    description: '是否活跃'
   })
   isActive: boolean
+
+  @Column({
+    type: 'enum',
+    enum: RoleEnum,
+    default: RoleEnum.User
+  })
+  @ApiProperty({
+    description: '角色'
+  })
+  roles: RoleEnum
 }
