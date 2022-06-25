@@ -64,5 +64,5 @@ export class User {
   @ApiProperty({
     description: '角色'
   })
-  roles: RoleEnum
+  readonly roles: RoleEnum
 }

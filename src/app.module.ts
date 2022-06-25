@@ -9,6 +9,9 @@ import { databaseConfig } from '../config/index.config'
 import { AuthModule } from './auth/auth.module'
 import { APP_GUARD } from '@nestjs/core'
 import { RateLimiterModule, RateLimiterGuard } from 'nestjs-rate-limiter'
+import { CategoryModule } from './category/category.module'
+import { CycleModule } from './cycle/cycle.module'
+import { GoodsModule } from './goods/goods.module'
 
 @Module({
   imports: [
@@ -26,7 +29,10 @@ import { RateLimiterModule, RateLimiterGuard } from 'nestjs-rate-limiter'
       duration: 60
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    CategoryModule,
+    CycleModule,
+    GoodsModule
   ],
   controllers: [AppController],
   providers: [

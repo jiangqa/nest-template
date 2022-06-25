@@ -48,17 +48,23 @@ export class UserController {
     return this.userService.findAll()
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get(':id')
+  @Roles(RoleEnum.Admin)
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id)
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
+  @Roles(RoleEnum.Admin)
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto)
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':id')
+  @Roles(RoleEnum.Admin)
   remove(@Param('id') id: string) {
     return this.userService.remove(+id)
   }
